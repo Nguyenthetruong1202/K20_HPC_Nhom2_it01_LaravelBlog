@@ -12,7 +12,7 @@ class Users extends Model
 
     use HasFactory;
 
-    protected $table = 'users';
+    protected $table = 'user';
 
     public function getAllUsers()
     {
@@ -28,5 +28,16 @@ class Users extends Model
     {
 
         return DB::select('select * from ' . $this->table . ' where id = ?', [$id]);
+    }
+    public function updateData($data, $id)
+    {
+        $data[] = $id;
+        return DB::update('UPDATE  ' . $this->table . ' SET fullname = ? , email = ? , create_at = ?  where id = ?', $data);
+    }
+
+    public function deleteUser($id)
+
+    {
+        return DB::delete('DELETE from ' . $this->table . ' where id = ?', [$id]);
     }
 }

@@ -2,17 +2,17 @@
 @section('content')
 <h3>{{$title}}</h3>
 
-<form method="post" action="{{ route('admin.postAdd') }}">
-      @error('msg')
-      <div class="alert alert-danger text-center">
-            {{ $message }}
-      </div>
-      @enderror
+<form method="post" action="{{ route('admin.postEdit') }}">
+   @if(session('msg'))
+<div>
+      <div class="alert alert-success ">{{session('msg')}}</div>
+</div>
+@endif
 
 
       <div class="mb-3">
             <label for="">Họ và Tên </label>
-            <input name="fullname" type="text" class="form-control" value="{{old('fullname')}}"
+            <input name="fullname" type="text" class="form-control" value="{{old('fullname') ?? $userDetail-> fullname}}"
                   placeholder="nhập họ và tên ...">
             {{-- hiển thị thông báo khi có lỗi  --}}
             @error('fullname')
@@ -23,7 +23,7 @@
       </div>
       <div class="mb-3">
             <label for="">email</label>
-            <input name="email" type="text" class="form-control" value="{{old('email')}}" placeholder="email...">
+            <input name="email" type="text" class="form-control" value="{{old('email') ?? $userDetail-> email}}  " placeholder="email..."  >
             {{-- hiển thị thông báo khi có lỗi  --}}
 
 

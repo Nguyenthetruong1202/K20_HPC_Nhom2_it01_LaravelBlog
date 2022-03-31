@@ -5,11 +5,12 @@
 
 <a class="btn btn-dark" href="{{route('admin.add')}}">Thêm người dùng</a>
 
-@error('msg')
-<div class="alert alert-danger text-center">
-      {{ $message }}
+@if(session('msg'))
+<div>
+      <div class="alert alert-success ">{{session('msg')}}</div>
 </div>
-@enderror
+@endif
+
 
 <table class="table table-bordered">
       <thead>
@@ -35,7 +36,7 @@
                   <td>{{$item ->create_at}}</td>
 
                   <td><a class="btn btn-danger " href="{{route('admin.edit',['id'=>$item->id])}}">Sửa</a></td>
-                  <td><a class="btn btn-warning " href="{{route('admin.delete',['id'=>$item->id])}}">Xóa</a></td>
+                  <td><a onclick="return  confirm('bạn có chắc chắn muốn xóa')" class="btn btn-warning " href="{{route('admin.delete',['id'=>$item->id])}}">Xóa</a></td>
             </tr>
             @endforeach
 

@@ -25,6 +25,6 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
       Route::get('/add', [MainController::class, 'add'])->name('add');
       Route::post('/add', [MainController::class, 'postAdd'])->name('postAdd');
       Route::get('/edit/{id}', [MainController::class, 'getEdit'])->name('edit');
-      Route::post('/edit/{id}', [MainController::class, 'postEdit'])->name('postEdit');
-      Route::post('/delete/{id}', [MainController::class, 'delete'])->name('delete');
+      Route::post('/update', [MainController::class, 'postEdit'])->name('postEdit');
+      Route::get('/delete/{id}', [MainController::class, 'delete'])->name('delete');
 });

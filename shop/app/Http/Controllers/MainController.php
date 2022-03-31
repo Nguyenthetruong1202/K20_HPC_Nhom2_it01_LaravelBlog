@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\updateRequest;
 use App\Http\Requests\UserRequest;
 use App\Models\Users;
 use Illuminate\Http\Request;
@@ -39,26 +40,64 @@ class MainController extends Controller
         $this->users->addUser($dataInsert);
         return redirect()->route('admin.index')->with('msg', 'Thêm người dùng thành công');
     }
-    public function getEdit($id = 0)
+    public function getEdit(Request $request, $id = 0)
     {
         $title =  'Trang  sửa người dùng';
+
         if (!empty($id)) {
+            $userDetail = $this->users->getDetail($id);
+            if (!empty($userDetail[0])) {
+                $request->session()->put('id', $id);
+                $userDetail = $userDetail[0];
+            } else {
+
+                return redirect()->route('admin.index')->with('msg', 'người dùng không tồn tại');
+            }
         } else {
             return redirect()->route('admin.index')->with('msg', 'người dùng không tồn tại');
         }
-        return view('admin.edit', compact('title'));
+        return view('admin.edit', compact('title', 'userDetail'));
     }
 
 
 
 
-    public function postEdit()
+    public function postEdit(updateRequest $request)
     {
-        return 'ddaay la postEdit';
+        $id = session('id');
+        if (empty($id)) {
+            return back()->with('msg', 'người dùng không tồn tại');
+        }
+        $dataUpdate = [
+            $request->fullname,
+            $request->email,
+            date('Y-m-d H:i:s'),
+
+        ];
+        $this->users->updateData($dataUpdate, $id);
+        return back()->with('msg', 'cập nhật người dùng thành công');
     }
-    public function delete()
+
+
+    public function delete($id = 0)
     {
-        return 'ddaay la delete';
+        if (!empty($id)) {
+            $userDetail = $this->users->getDetail($id);
+            if (!empty($userDetail[0])) {
+
+                $deleteStatus  =    $this->users->deleteUser($id);
+                if ($deleteStatus) {
+                    $msg = 'xóa người dùng thành công';
+                } else {
+                    $msg = 'bạn không thể xóa vui lòng thử lại';
+                }
+            } else {
+                $msg = 'người dùng không tồn tại';
+            }
+        } else {
+            $msg = 'liên kết không tồn tại';
+        }
+        return   redirect()->route('admin.index')->with('msg', $msg);
     }
 
 
