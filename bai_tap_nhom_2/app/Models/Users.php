@@ -22,7 +22,7 @@ class Users extends Model
     public function addUser($data)
 
     {
-        DB::insert('INSERT INTO user( fullname ,email , create_at) value(? ,? ,?) ', $data);
+        DB::insert('INSERT INTO user( fullname, address ,email, phone , create_at) value(? ,? ,?,?,?) ', $data);
     }
     public function getDetail($id)
     {
@@ -32,7 +32,7 @@ class Users extends Model
     public function updateData($data, $id)
     {
         $data[] = $id;
-        return DB::update('UPDATE  ' . $this->table . ' SET fullname = ? , email = ? , create_at = ?  where id = ?', $data);
+        return DB::update('UPDATE  ' . $this->table . ' SET fullname = ?,address = ?  , email = ?,phone = ? , create_at = ?  where id = ?', $data);
     }
 
     public function deleteUser($id)

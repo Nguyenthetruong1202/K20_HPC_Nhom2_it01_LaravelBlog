@@ -26,7 +26,9 @@ class UserRequest extends FormRequest
         return [
             'fullname' => 'required|min:5',
             'email' => 'required|email|unique:user',
-
+            'address' => 'required',
+            'phone' => 'required|unique:user',
+            // |regex:/(01)[0-9]{9}$/
         ];
     }
     public function messages()
@@ -37,6 +39,11 @@ class UserRequest extends FormRequest
             'email.required' => 'Email bắt buộc',
             'email.email' => 'Email không đúng định dạng',
             'email.unique' => 'Email đã tồn tại trên hệ thống',
+            'address.required' => 'địa chỉ bắt buộc nhập ',
+            'phone.required' => 'trường này bắt buộc phải nhập',
+            'phone.min' => 'Số điện thoại phải ít nhất :min ký tự ',
+            'phone.unique' => 'Số điện thoại đã bị trùng',
+            // 'phone.regex' => 'lỗi số điện thoại',
 
         ];
     }

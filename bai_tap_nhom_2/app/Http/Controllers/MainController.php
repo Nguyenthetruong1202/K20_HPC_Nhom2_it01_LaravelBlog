@@ -19,7 +19,6 @@ class MainController extends Controller
     public function index()
     {
         $users = new Users();
-
         $usersList = $this->users->getAllUsers();
         $title =  'Trang quản trị admin';
         return view('admin.home', compact('title', 'usersList'));
@@ -34,7 +33,9 @@ class MainController extends Controller
     {
         $dataInsert = [
             $request->fullname,
+            $request->address,
             $request->email,
+            $request->phone,
             date('Y-m-d H:i:s'),
         ];
         $this->users->addUser($dataInsert);
@@ -43,7 +44,6 @@ class MainController extends Controller
     public function getEdit(Request $request, $id = 0)
     {
         $title =  'Trang  sửa người dùng';
-
         if (!empty($id)) {
             $userDetail = $this->users->getDetail($id);
             if (!empty($userDetail[0])) {
@@ -56,6 +56,7 @@ class MainController extends Controller
         } else {
             return redirect()->route('admin.index')->with('msg', 'người dùng không tồn tại');
         }
+
         return view('admin.edit', compact('title', 'userDetail'));
     }
 
@@ -70,7 +71,9 @@ class MainController extends Controller
         }
         $dataUpdate = [
             $request->fullname,
+            $request->address,
             $request->email,
+            $request->phone,
             date('Y-m-d H:i:s'),
 
         ];

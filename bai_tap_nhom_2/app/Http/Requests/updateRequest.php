@@ -25,7 +25,10 @@ class updateRequest extends FormRequest
     {
         return [
             'fullname' => 'required|min:5',
-            'email' => 'required|email '
+            'email' => 'required|email',
+            'address' => 'required',
+            'phone' => 'required',
+            // |regex:/(01)[0-9]{9}$/
         ];
     }
     public function messages()
@@ -35,6 +38,10 @@ class updateRequest extends FormRequest
             'fullname.min' => 'Họ và tên phải từ :min ký tự trở lên',
             'email.required' => 'Email bắt buộc',
             'email.email' => 'Email không đúng định dạng',
+            'email.unique' => 'Email đã tồn tại trên hệ thống',
+            'address.required' => 'địa chỉ bắt buộc nhập ',
+            'phone.required' => 'trường này bắt buộc phải nhập',
+            // 'phone.regex' => 'lỗi số điện thoại',
 
         ];
     }
